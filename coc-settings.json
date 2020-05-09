@@ -1,0 +1,13 @@
+{
+    "eslint.autoFix": false,
+    "eslint.autoFixOnSave": false,
+    "coc.preferences.jumpCommand": "tab drop",
+    "eslint.filetypes": [
+        "javascript",
+        "vue"
+    ],
+    "python.linting.flake8Enabled": true,
+    "python.jediEnabled": false,
+    "javascript.suggestionActions.enabled": false,
+    "python.linting.mypyEnabled": true
+}

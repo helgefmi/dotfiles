@@ -1,0 +1,21 @@
+startup_message off
+
+# Look and feel
+hardstatus alwayslastline '%{= kG}[ %{G}%H %{g}][%= %{=kw}%?%-Lw%?%{r}(%{W}%n*%f %t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][ %{B}%Y-%m-%d %{W}%c %{g}]'
+
+# Left Right meta key mods
+#ALT-,. and ALT-<>
+bindkey "^[," prev
+bindkey "^[." next
+
+vbell off
+bell_msg ""
+
+deflogin off
+maptimeout 30
+nethack on
+defutf8 on
+
+defscrollback 20000
+
+shell "/usr/bin/zsh"
