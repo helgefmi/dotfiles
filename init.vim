@@ -1,13 +1,13 @@
 call plug#begin(stdpath('data') . '/plugged')
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    " :CocInstall coc-python coc-tsserver coc-eslint coc-json coc-css coc-vetur coc-rls
+    " :CocInstall coc-python coc-tsserver coc-eslint coc-json coc-css coc-vetur coc-rls coc-html
 
     Plug 'posva/vim-vue'
 
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
 
-    Plug 'lifepillar/vim-gruvbox8'
+    Plug 'morhetz/gruvbox'
 
     Plug 'scrooloose/nerdcommenter'
 
@@ -209,4 +209,7 @@ autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 " clear trailing whitespaces
 noremap <leader>ww :%s/\s\+$//g<CR>
 
-colorscheme gruvbox8_hard
+
+let g:gruvbox_contrast_dark = 'hard'
+
+colorscheme gruvbox
