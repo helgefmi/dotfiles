@@ -121,8 +121,6 @@ nnoremap <silent> <C-L> :nohls<CR>
 
 noremap <C-N><C-N> :set invnumber<CR>
 
-noremap <F1> :set nopaste<CR>
-noremap <F2> :set paste<CR>
 noremap <F5> :source ~/.config/nvim/init.vim<CR>
 
 :highlight ExtraWhitespace ctermbg=red guibg=red
@@ -171,6 +169,9 @@ nmap <silent> <leader>gr <Plug>(coc-references)
 nnoremap <silent> <leader>gs :<C-u>CocList -I -N --top symbols<CR>
 
 nnoremap <leader>n :NERDTreeToggle<CR>
+
+nnoremap <leader>1 :set nopaste<CR>
+nnoremap <leader>2 :set paste<CR>
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
