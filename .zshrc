@@ -110,3 +110,5 @@ TAB_TITLE_PREFIX='"`'$_GET_PATH' | sed "s:..*/::"`$PROMPT_CHAR"'
 
 # Aliases to company/private stuff
 [ -e ~/.zshrc.secret ] && source ~/.zshrc.secret
+
+[ -e ~/.cargo/env ] && source ~/.cargo/env
