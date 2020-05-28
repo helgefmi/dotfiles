@@ -16,9 +16,6 @@ call plug#begin(stdpath('data') . '/plugged')
     Plug 'terryma/vim-multiple-cursors'
 call plug#end()
 
-" TextEdit might fail if hidden is not set.
-set hidden
-
 " Some servers have issues with backup files, see #649.
 set nobackup
 set nowritebackup
@@ -51,19 +48,20 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-" Use <c-space> to trigger completion.
+" permanent undo
+set undodir=~/.vimdid
+set undofile
+
+" use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
 
-" Use `[g` and `]g` to navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
+" use ctrl+k and ctrl+j to navigate diagnostics
+nmap <C-k> <Plug>(coc-diagnostic-prev)
+nmap <C-j> <Plug>(coc-diagnostic-next)
 
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
-" So nvim works in any venv
+" so nvim works in any venv
 let g:python3_host_prog = '/usr/bin/python3'
 
 let g:airline_theme="distinguished"
@@ -107,35 +105,39 @@ set shiftround
 set autoindent
 set smartindent
 
-:set encoding=utf8
-:set splitbelow
-:set splitright
+set encoding=utf8
+set splitbelow
+set splitright
 
+noremap <F5> :source ~/.config/nvim/init.vim<CR>
+
+" more python friendly nerdcomments
+let g:NERDSpaceDelims = 1
+let g:NERDCompactSexyComs = 1
+let g:NERDDefaultAlign = 'left'
+
+" insert one character at given position
 nmap <Space> i <Esc>r
 
+" my preferred way of managing buffers
 nmap <A-1> :tabprevious<CR>
 nmap <A-2> :tabnext<CR>
 nmap ,t :tabnew<CR>
 
+" clear highlights after a searh
 nnoremap <silent> <C-L> :nohls<CR>
 
+" toggle line numbers
 noremap <C-N><C-N> :set invnumber<CR>
 
-noremap <F5> :source ~/.config/nvim/init.vim<CR>
+" go back to the last position in the file after opening it
+ :au BufReadPost *
+\ if line("'\"") > 1 && line("'\"") <= line("$") && &ft !~# 'commit'
+\ |   exe "normal! g`\""
+\ | endif
 
-:highlight ExtraWhitespace ctermbg=red guibg=red
-:au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-:au InsertLeave * match ExtraWhitespace /\s\+$/
-:autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-
+" not sure if this one is needed
 let g:html_indent_tags = 'li\|p'
-
-" Use the below highlight group when displaying bad whitespace is desired.
-highlight BadWhitespace ctermbg=red guibg=red
-" Display tabs at the beginning of a line in Python mode as bad.
-au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /^\t\+/
-" Make trailing whitespace be flagged as bad.
-au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 augroup neovim_terminal
     autocmd!
@@ -143,48 +145,68 @@ augroup neovim_terminal
     autocmd TermOpen * :set nonumber norelativenumber
 augroup END
 
-:tnoremap <Esc> <C-\><C-n>
+tnoremap <Esc> <C-\><C-n>
 
-:tnoremap <A-h> <C-\><C-N><C-w>h
-:tnoremap <A-j> <C-\><C-N><C-w>j
-:tnoremap <A-k> <C-\><C-N><C-w>k
-:tnoremap <A-l> <C-\><C-N><C-w>l
-:inoremap <A-h> <C-\><C-N><C-w>h
-:inoremap <A-j> <C-\><C-N><C-w>j
-:inoremap <A-k> <C-\><C-N><C-w>k
-:inoremap <A-l> <C-\><C-N><C-w>l
-:nnoremap <A-h> <C-w>h
-:nnoremap <A-j> <C-w>j
-:nnoremap <A-k> <C-w>k
-:nnoremap <A-l> <C-w>l
+tnoremap <A-h> <C-\><C-N><C-w>h
+tnoremap <A-j> <C-\><C-N><C-w>j
+tnoremap <A-k> <C-\><C-N><C-w>k
+tnoremap <A-l> <C-\><C-N><C-w>l
+inoremap <A-h> <C-\><C-N><C-w>h
+inoremap <A-j> <C-\><C-N><C-w>j
+inoremap <A-k> <C-\><C-N><C-w>k
+inoremap <A-l> <C-\><C-N><C-w>l
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
 
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
 let mapleader="\<Space>"
 
+" coc stuff
 nmap <silent> <leader>gd <Plug>(coc-definition)
 nmap <silent> <leader>gt <Plug>(coc-type-definition)
 nmap <silent> <leader>gi <Plug>(coc-implementation)
 nmap <silent> <leader>gr <Plug>(coc-references)
 nnoremap <silent> <leader>gs :<C-u>CocList -I -N --top symbols<CR>
 
+" nerdtree
 nnoremap <leader>n :NERDTreeToggle<CR>
 
+" toggle paste mode
 nnoremap <leader>1 :set nopaste<CR>
 nnoremap <leader>2 :set paste<CR>
 
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+" copy/paste between my X clipboard and vim
+noremap <leader>pp :read !xsel --clipboard --output<CR>
+noremap <leader>pc :w !xsel -ib<CR><CR>
 
-function! s:show_documentation()
+" use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation("float")<CR>
+nnoremap <silent> L :call <SID>show_documentation("preview")<CR>
+" nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation(arg)
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
   else
+    call coc#config("coc.preferences.hoverTarget", a:arg)
     call CocAction('doHover')
   endif
 endfunction
 
-colorscheme gruvbox8_hard
-
-set timeoutlen=1000
+" I hate waiting
+set timeoutlen=500
 set ttimeoutlen=50
+
+" highlight trailing whitespaces
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=darkyellow guibg=darkyellow
+au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+au InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+
+" clear trailing whitespaces
+noremap <leader>ww :%s/\s\+$//g<CR>
+
+colorscheme gruvbox8_hard
