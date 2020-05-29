@@ -1,8 +1,10 @@
-call plug#begin(stdpath('data') . '/plugged')
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    " :CocInstall coc-python coc-tsserver coc-eslint coc-json coc-css coc-vetur coc-rls coc-html
+set shell=/bin/zsh
+let mapleader="\<Space>"
+set nocompatible
 
-    Plug 'posva/vim-vue'
+call plug#begin(stdpath('data') . '/plugged')
+    " CocInstall coc-python coc-tsserver coc-eslint coc-json coc-css coc-vetur coc-rls coc-html
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
@@ -14,29 +16,48 @@ call plug#begin(stdpath('data') . '/plugged')
     Plug 'scrooloose/nerdtree'
 
     Plug 'terryma/vim-multiple-cursors'
+
+    Plug 'andymass/vim-matchup'
+
+    " custom language support
+    Plug 'posva/vim-vue'
+    Plug 'cespare/vim-toml'
+    Plug 'stephpy/vim-yaml'
+    Plug 'rust-lang/rust.vim'
+    Plug 'rhysd/vim-clang-format'
+    Plug 'plasticboy/vim-markdown'
 call plug#end()
 
-" Some servers have issues with backup files, see #649.
+" format rust code on save
+let g:rustfmt_autosave = 1
+let g:rustfmt_emit_files = 1
+let g:rustfmt_fail_silently = 0
+
+" some servers have issues with backup files, see #649.
 set nobackup
 set nowritebackup
 
-" Give more space for displaying messages.
+" give more space for displaying messages.
 set cmdheight=2
 
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
+" having longer updatetime (default is 4000 ms = 4 s) leads to noticeable delays and poor user experience.
 set updatetime=300
 
-" Don't pass messages to |ins-completion-menu|.
+" don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved.
+" always show the signcolumn, otherwise it would shift the text each time diagnostics appear/become resolved.
 set signcolumn=yes
 
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
+" wrapping options
+set textwidth=120
+set formatoptions=tc " wrap text and comments using textwidth
+set formatoptions+=r " continue comments when pressing ENTER in I mode
+set formatoptions+=q " enable formatting of comments with gq
+set formatoptions+=n " detect lists for formatting
+set formatoptions+=b " auto-wrap in insert mode, and do not wrap old long lines
+
+" use tab for trigger completion with characters ahead and navigate.
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
@@ -109,6 +130,8 @@ set encoding=utf8
 set splitbelow
 set splitright
 
+set listchars=nbsp:¬,extends:»,precedes:«,trail:•
+
 noremap <F5> :source ~/.config/nvim/init.vim<CR>
 
 " more python friendly nerdcomments
@@ -162,8 +185,6 @@ nnoremap <A-l> <C-w>l
 
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
-let mapleader="\<Space>"
-
 " coc stuff
 nmap <silent> <leader>gd <Plug>(coc-definition)
 nmap <silent> <leader>gt <Plug>(coc-type-definition)
@@ -177,6 +198,10 @@ nnoremap <leader>n :NERDTreeToggle<CR>
 " toggle paste mode
 nnoremap <leader>1 :set nopaste<CR>
 nnoremap <leader>2 :set paste<CR>
+
+" disable annoying :help binding
+map <F1> <Esc>
+imap <F1> <Esc>
 
 " copy/paste between my X clipboard and vim
 noremap <leader>pp :read !xsel --clipboard --output<CR>
@@ -208,6 +233,9 @@ autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 
 " clear trailing whitespaces
 noremap <leader>ww :%s/\s\+$//g<CR>
+
+" https://github.com/neoclide/coc-rls/issues/6
+autocmd FileType rust let b:coc_root_patterns = ['Cargo.toml', '.git']
 
 let g:coc_disable_startup_warning = 1
 
