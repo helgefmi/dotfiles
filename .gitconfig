@@ -1,0 +1,16 @@
+[github]
+    user = helgefmi
+
+[user]
+	name = Helge Milde
+	email = helgefmi@gmail.com
+
+[core]
+	editor = vim
+
+[color]
+    ui = auto
+	status = auto
+
+[hub]
+    protocol = https
