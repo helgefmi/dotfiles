@@ -209,6 +209,7 @@ autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 " clear trailing whitespaces
 noremap <leader>ww :%s/\s\+$//g<CR>
 
+let g:coc_disable_startup_warning = 1
 
 let g:gruvbox_contrast_dark = 'hard'
 
