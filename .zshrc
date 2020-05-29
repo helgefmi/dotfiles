@@ -99,6 +99,7 @@ export EDITOR="nvim"
 
 alias vim="nvim"
 alias vi="nvim"
+alias vimvim="vim ~/.config/nvim/init.vim"
 
 alias sz="source ~/.zshrc"
 
