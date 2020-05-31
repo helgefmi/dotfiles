@@ -1,12 +1,14 @@
 startup_message off
 
 # Look and feel
-hardstatus alwayslastline '%{= kG}[ %{G}%S %{g}][%= %{=kw}%?%-Lw%?%{r}(%{W}%n*%f %t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][ %{B}%Y-%m-%d %{W}%c %{g}]'
+hardstatus alwayslastline '%{= dG}[ %{w}%S %{g}][%= %{w}%?%-Lw%?%{r}(%{w}%n*%f %t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][ %{w}%Y-%m-%d %{g}]'
 
 # Left Right meta key mods
 #ALT-,. and ALT-<>
 bindkey "^[," prev
 bindkey "^[." next
+
+bind r eval "source $HOME/.screenrc" "echo '.screenrc reloaded!'"
 
 vbell off
 bell_msg ""
