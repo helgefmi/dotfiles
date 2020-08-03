@@ -1,14 +1,29 @@
 {
-    "eslint.autoFix": false,
-    "eslint.autoFixOnSave": false,
+    "coc.preferences.formatOnSaveFiletypes": ["python", "javascript", "vue"],
     "coc.preferences.jumpCommand": "tab drop",
+    "coc.preferences.hoverTarget": "float",
+    "eslint.autoFix": false,
+    "eslint.autoFixOnSave": true,
     "eslint.filetypes": [
         "javascript",
         "vue"
     ],
-    "python.linting.flake8Enabled": true,
-    "python.jediEnabled": false,
     "javascript.suggestionActions.enabled": false,
-    "python.linting.mypyEnabled": true,
-    "coc.preferences.hoverTarget": "float"
+    "python.formatting.blackArgs": ["-S", "--target-version=py37"],
+    "python.formatting.provider": "black",
+    "python.jediEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.mypyEnabled": false,
+    "languageserver": {
+        "ccls": {
+            "command": "ccls",
+            "filetypes": ["c", "cpp", "objc", "objcpp"],
+            "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+            "initializationOptions": {
+                "cache": {
+                    "directory": "/tmp/ccls"
+                }
+            }
+        }
+    }
 }

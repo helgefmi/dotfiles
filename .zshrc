@@ -1,4 +1,14 @@
-export PATH=$HOME/bin:$HOME/.cargo/bin/:/usr/local/bin:$PATH
+export PATH=$HOME/opt/cross/bin/:$PATH
+export PATH=$HOME/bin:$PATH
+export PATH=$HOME/.cargo/bin/$PATH
+export PATH=/usr/local/bin:$PATH
+export PATH=$HOME/Android/Sdk/platform-tools:$PATH
+export PATH=$HOME/Android/Sdk/tools:$PATH
+export PATH=$HOME/Android/Sdk/tools/bin:$PATH
+export PATH=$HOME/Android/Sdk/emulator:$PATH
+
+export ANDROID_HOME=~/Android/Sdk
+export JAVA_HOME=/home/helge/opt/jdk8u252-b09/
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/helge/.oh-my-zsh"
@@ -105,6 +115,21 @@ alias sz="source ~/.zshrc"
 
 alias grep="grep --color=auto"
 alias ls="ls --color=auto -G"
+alias rm="rm -i"
+
+alias python="python3"
+
+function pygrep() {
+    grep $@ $(find -name \*.py)
+}
+
+function htmlgrep() {
+    grep $@ $(find -name \*.html)
+}
+
+function jsgrep() {
+    grep $@ $(find -name \*.js)
+}
 
 # See oh-my-zsh `screen` plugin
 TAB_TITLE_PREFIX='"`'$_GET_PATH' | sed "s:..*/::"`$PROMPT_CHAR"'

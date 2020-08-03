@@ -3,7 +3,7 @@ let mapleader="\<Space>"
 set nocompatible
 
 call plug#begin(stdpath('data') . '/plugged')
-    " CocInstall coc-python coc-tsserver coc-eslint coc-json coc-css coc-vetur coc-rls coc-html
+    " CocInstall coc-python coc-tsserver coc-eslint coc-json coc-css coc-vetur coc-rls coc-html coc-ccls
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
     Plug 'vim-airline/vim-airline'
@@ -19,6 +19,8 @@ call plug#begin(stdpath('data') . '/plugged')
 
     Plug 'andymass/vim-matchup'
 
+    Plug 'kana/vim-altr'
+
     " custom language support
     Plug 'posva/vim-vue'
     Plug 'cespare/vim-toml'
@@ -27,6 +29,8 @@ call plug#begin(stdpath('data') . '/plugged')
     Plug 'rhysd/vim-clang-format'
     Plug 'plasticboy/vim-markdown'
 call plug#end()
+
+nmap <leader>a <Plug>(altr-forward)
 
 " format rust code on save
 let g:rustfmt_autosave = 1
@@ -236,6 +240,8 @@ noremap <leader>ww :%s/\s\+$//g<CR>
 
 " https://github.com/neoclide/coc-rls/issues/6
 autocmd FileType rust let b:coc_root_patterns = ['Cargo.toml', '.git']
+
+au BufNewFile,BufRead *.es6 set filetype=javascript
 
 let g:coc_disable_startup_warning = 1
 
